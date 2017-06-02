@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block head %}
+    <title>AJAX</title>
+{% endblock %}
+{% block body %}
+    {% for i in res %}
+    <p>{{ i }}</p>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends basehtml %}
+{% block head %}
+    <title>Clinica Dental || Actualizar Historial Médico</title>
+{% endblock %}
+
+{% block title %}
+    <h3><i class="fa fa-money"></i> Actualizar Historial Médico </h3>
+{% endblock %}
+
+{% block body %}
+    <form method="post">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <h4>Seleccionar Alergias</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-lg-10">
+                <div class="panel">
+                    <div class="panel-body text-center">
+                        <div class="row">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <h4>Seleccionar Enfermedades</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-lg-10">
+                <div class="panel">
+                    <div class="panel-body text-center">
+                        <div class="row">
+                            {% csrf_token %}
+                            {{ form2.as_p }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-lg-10">
+                <div class="panel">
+                    <div class="panel-body text-center">
+                        <div class="row">
+                            <button class="btn btn-info" type="submit">Actualizar</button>
+                            <a href="/register/home" class="btn btn-danger">Cancelar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </form>
+{% endblock %}
+

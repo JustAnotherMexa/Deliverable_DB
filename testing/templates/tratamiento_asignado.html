@@ -1,0 +1,53 @@
+{% extends basehtml %}
+
+{% block head %}
+    {% load static %}
+    <title>Clinica Dental || Tratamientos Asignados</title>
+{% endblock %}
+
+{% block title %}
+    <h3><i class="fa fa-heartbeat"></i> Tratamientos Asignados</h3>
+{% endblock %}
+
+{% load render_table from django_tables2 %}
+
+{% block body %}
+<div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <h1>Listado de tratamientos Asignados</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        {% if tabla != None %}
+                        {% render_table tabla %}
+                        {% else %}
+                            <h1>No tiene tratamientos registrados</h1>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+    $('td:nth-child(1),th:nth-child(1)').hide();
+    $('td:nth-child(3),th:nth-child(3)').hide();
+    $('td:nth-child(4),th:nth-child(4)').hide();
+    </script>
+{% endblock %}

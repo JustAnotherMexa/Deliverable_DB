@@ -1,0 +1,42 @@
+{% extends basehtml %}
+{% block head %}
+    <title>Clinica Dental || Tratamiento</title>
+{% endblock %}
+
+{% block title %}
+    <h3><i class="fa fa-list"></i> Nuevo Tratamiento </h3>
+{% endblock %}
+{% load static %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <h1>Agregar un nuevo tratamiento</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button class="btn btn-default" type="submit">Agregar</button>
+                            <a href="/home" type="btn btn-danger">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+{% endblock %}

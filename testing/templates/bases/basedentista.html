@@ -1,0 +1,219 @@
+{% extends 'bases/main-base.html' %}
+
+{% block mainhead %}
+    {% block head %}
+    {% endblock %}
+{% endblock %}
+
+{% block mainbody %}
+    {% load static %}
+    <body>
+    <div id="container" class="effect mainnav-full">
+        <!--NAVBAR-->
+        <!--===================================================-->
+        <header id="navbar">
+            <div id="navbar-container" class="boxed">
+                <!--Brand logo & name-->
+                <!--================================-->
+                <div class="navbar-header">
+                    <a href="/home" class="navbar-brand">
+                        <img class="pad-all img" src={% static 'img/logo-nom.png' %} height="100%">
+                    </a>
+                </div>
+                <!--================================-->
+                <!--End brand logo & name-->
+                <!--Navbar Dropdown-->
+                <!--================================-->
+                <div class="navbar-content clearfix">
+                    <ul class="megamenu">
+                        <ul class="navbar-default pull-left">
+                            <div class="navbar-header">
+                                <button type="button" data-toggle="collapse" data-target="#defaultmenu"
+                                        class="navbar-toggle">
+                                    <span class="icon-bar"></span><span class="icon-bar"></span><span
+                                        class="icon-bar"></span>
+                                </button>
+                            </div>
+                            <div id="defaultmenu" class="navbar-collapse collapse ">
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <a href="/home"> Inicio </a>
+                                    </li>
+                                    <!-- standard drop down -->
+                                    <li class="dropdown">
+                                        <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Citas <b
+                                                class="caret"></b></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="/nueva_cita">Nueva cita</a></li>
+                                            <li><a href="/citas_confirmar">Citas por confirmar </a></li>
+                                            <li><a href="/todas_citas">Todas las citas </a></li>
+                                        </ul>
+                                        <!-- end dropdown-menu -->
+                                    </li>
+                                    <!-- end standard drop down -->
+                                    <!-- standard drop down -->
+                                    <li>
+                                        <a href="/pacientes"> Pacientes </a>
+                                    </li>
+                                    <!-- end standard drop down -->
+                                    <!-- standard drop down -->
+                                    <li class="dropdown">
+                                        <a href="#" data-toggle="dropdown" class="dropdown-toggle"> Tratamientos <b
+                                                class="caret"></b></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="/nuevo_tratamiento"> Nuevo tratamiento </a></li>
+                                            <li><a href="/tratamientos"> Todos los tratamientos </a></li>
+                                            <li><a href="/asignar_tratamientos"> Asignar tratamientos </a></li>
+                                        </ul>
+                                        <!-- end dropdown-menu -->
+                                    </li>
+                                    <!-- end standard drop down -->
+                                    <!-- standard drop down -->
+                                    <li>
+                                        <a href="/materiales"> Materiales </a>
+                                    </li>
+                                    <!-- end standard drop down -->
+                                    <!-- standard drop down -->
+                                    <li>
+                                        <a href="/ver_pagos"> Pagos </a>
+                                    </li>
+                                    <!-- end standard drop down -->
+                                </ul>
+                                <!-- end nav navbar-nav -->
+                            </div>
+
+                        </ul>
+                        <ul class="nav navbar-top-links pull-right">
+                            <!--Profile toogle button-->
+                            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                            <li class="hidden-xs" id="toggleFullscreen">
+                                <a class="fa fa-expand" data-toggle="fullscreen" href="#" role="button">
+                                    <span class="sr-only">Pantalla Completa</span>
+                                </a>
+                            </li>
+                            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                            <!--End Profile toogle button-->
+                            <!--User dropdown-->
+                            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                            <li id="dropdown-user" class="dropdown">
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
+                                    <span class="pull-right"> <i class="fa fa-user fa-fw"></i>
+                                    </span></a>
+                                <div class="dropdown-menu dropdown-menu-right with-arrow">
+                                    <!-- User dropdown menu -->
+                                    <ul class="head-list">
+                                        <li>
+                                            <a href="/perfil"> <i class="fa fa-user fa-fw"></i> Perfil </a>
+                                        </li>
+                                        <li>
+                                            <a href="/logout"> <i class="fa fa-sign-out fa-fw"></i> Cerrar Session </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                            <!--End user dropdown-->
+                        </ul>
+                    </ul>
+                </div>
+                <!--================================-->
+                <!--End Navbar Dropdown-->
+            </div>
+
+        </header>
+        <!--===================================================-->
+        <!--END NAVBAR-->
+        <div class="boxed">
+            <!--CONTENT CONTAINER-->
+            <!--===================================================-->
+            <div id="content-container">
+                <!--Page Title-->
+                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                <div class="row">
+                    <div class="col-xs-1"></div>
+                    <div class="col-md-11 pageheader">
+                        {% block title %}
+                        {% endblock %}
+                    </div>
+                </div>
+                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                <!--End page title-->
+                <!--Page content-->
+                <div class="bodywrap">
+                    {% block body %}
+                    {% endblock %}
+                </div>
+
+                <!--End page content-->
+            </div>
+            <!--===================================================-->
+            <!--END CONTENT CONTAINER-->
+        </div>
+        <!-- FOOTER -->
+        <!--===================================================-->
+        <footer id="footer">
+            <p class="pad-lft">&#0169; 2017 Clinica Dental</p>
+        </footer>
+        <!--===================================================-->
+        <!-- END FOOTER -->
+        <!-- SCROLL TOP BUTTON -->
+        <!--===================================================-->
+        <button id="scroll-top" class="btn"><i class="fa fa-chevron-up"></i></button>
+        <!--===================================================-->
+    </div>
+    <!--===================================================-->
+    <!-- END OF CONTAINER -->
+    <!--JAVASCRIPT-->
+    <!--=================================================-->
+    <!--jQuery [ REQUIRED ]-->
+    <script src={% static 'js/jquery-2.1.1.min.js' %}></script>
+    <!--BootstrapJS [ RECOMMENDED ]-->
+    <script src={% static 'js/bootstrap.min.js' %}></script>
+    <!--Fast Click [ OPTIONAL ]-->
+    <script src={% static 'plugins/fast-click/fastclick.min.js' %}></script>
+    <!--Jquery Nano Scroller js [ REQUIRED ]-->
+    <script src={% static 'plugins/nanoscrollerjs/jquery.nanoscroller.min.js' %}></script>
+    <!--Metismenu js [ REQUIRED ]-->
+    <script src={% static 'plugins/metismenu/metismenu.min.js' %}></script>
+    <!--Jasmine Admin [ RECOMMENDED ]-->
+    <script src={% static 'js/scripts.js' %}></script>
+    <!--Switchery [ OPTIONAL ]-->
+    <script src={% static 'plugins/switchery/switchery.min.js' %}></script>
+    <!--Jquery Steps [ OPTIONAL ]-->
+    <script src={% static 'plugins/parsley/parsley.min.js' %}></script>
+    <!--Jquery Steps [ OPTIONAL ]-->
+    <script src={% static 'plugins/jquery-steps/jquery-steps.min.js' %}></script>
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src={% static 'plugins/bootstrap-select/bootstrap-select.min.js' %}></script>
+    <!--Bootstrap Wizard [ OPTIONAL ]-->
+    <script src={% static 'plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js' %}></script>
+    <!--Masked Input [ OPTIONAL ]-->
+    <script src={% static 'plugins/masked-input/bootstrap-inputmask.min.js' %}></script>
+    <!--Bootstrap Validator [ OPTIONAL ]-->
+    <script src={% static 'plugins/bootstrap-validator/bootstrapValidator.min.js' %}></script>
+    <!--Flot Chart [ OPTIONAL ]-->
+    <script src={% static 'plugins/flot-charts/jquery.flot.min.js' %}></script>
+    <script src={% static 'plugins/flot-charts/jquery.flot.resize.min.js' %}></script>
+    <script src={% static 'plugins/flot-charts/jquery.flot.spline.js' %}></script>
+    <script src={% static 'plugins/moment/moment.min.js' %}></script>
+    <script src={% static 'plugins/moment-range/moment-range.js' %}></script>
+    <script src={% static 'plugins/flot-charts/jquery.flot.tooltip.min.js' %}></script>
+    <!--Flot Order Bars Chart [ OPTIONAL ]-->
+    <script src={% static 'plugins/flot-charts/jquery.flot.categories.js' %}></script>
+    <!--Morris.js [ OPTIONAL ]-->
+    <script src={% static 'plugins/morris-js/morris.min.js' %}></script>
+    <script src={% static 'plugins/morris-js/raphael-js/raphael.min.js' %}></script>
+    <!--Easy Pie Chart [ OPTIONAL ]-->
+    <script src={% static 'plugins/easy-pie-chart/jquery.easypiechart.min.js' %}></script>
+    <!--Fullscreen jQuery [ OPTIONAL ]-->
+    <script src={% static 'plugins/screenfull/screenfull.js' %}></script>
+    <!--Form Wizard [ SAMPLE ]-->
+    <script src={% static 'js/demo/index.js' %}></script>
+    <!--Form Wizard [ SAMPLE ]-->
+    <script src={% static 'js/demo/wizard.js' %}></script>
+    <!--Form Wizard [ SAMPLE ]-->
+    <script src={% static 'js/demo/form-wizard.js' %}></script>
+    {% block scripts %}
+    {% endblock %}
+    </body>
+{% endblock %}

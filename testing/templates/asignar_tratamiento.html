@@ -1,0 +1,134 @@
+{% extends basehtml %}
+{% block head %}
+    {% load static %}
+    <!-- Datepicker-->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}"/>
+    <title>Clinica Dental || Asignar tratamiento</title>
+{% endblock %}
+
+{% block title %}
+    <h3><i class="fa fa-list"></i> Asignar tratamientos</h3>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <h1>Asignar tratamientos</h1>
+                        <h4>Tratamientos a realizar con pacientes</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <form method="post">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+
+    <button id="asignar" class="btn btn-info" type="submit">Asignar</button>
+    <a href="/home"  class="btn btn-danger">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    </form>
+{% endblock %}
+{% block scripts %}
+    <!-- Datepicker-->
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.datepicker').datepicker();
+            $('.timepicker').timepicker({
+                timeFormat: 'H:mm',
+                interval:30,
+                minTime:'',
+                maxTime:'',
+                dropdown: true,
+                scrollbar: true,
+                dynamic: false
+            });
+        });
+    </script>
+    <script>
+        $('#id_Dia').on('change', function(){
+            dia = $('#id_Dia').val();
+            if("{{ grupo }}"=="Doctores") {
+                doctor = "{{ usuario }}";
+            }
+            else
+            {
+                doctor = $('#id_Doctores').val()
+            }
+            $.ajax({  //Call ajax function sending the option loaded
+                url: "search_ajax/",  //This is the url of the ajax view where you make the search
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    doctor: doctor,
+                    dia: dia,
+                    tag: "dynamichorarios"
+                },
+                success: function (response) {
+                    horadia = response;
+                    horaminima = horadia.substr(0, horadia.indexOf('-'));
+                    horamaxima = horadia.substr(horadia.indexOf('-') + 1, horadia.length);
+                }
+                });
+                setTimeout(function() {
+                    $('.timepicker').data('TimePicker').options.minTime = horaminima;
+                    $('.timepicker').data('TimePicker').options.maxTime = horamaxima;
+                    $('.timepicker').data('TimePicker').items = null;
+                    $('.timepicker').data('TimePicker').widget.instance = null;
+                }, 1500);
+        });
+    </script>
+    <script>
+        $('#id_Tratamientos').on('change',function(){
+            $.ajax({  //Call ajax function sending the option loaded
+            url: "search_ajax/",  //This is the url of the ajax view where you make the search
+            type: 'POST',
+            dataType: "json",
+            data: { tag:"gettreatmentcost"},
+                success: function(response) {
+                    result=response;
+                    costo=0
+                    for(i=0; i<result.length; ++i){
+                        item = result[i];
+                        if(item[0]==$('#id_Tratamientos').val()){
+                            $('#id_Costo').val(item[1]);
+                            break;
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

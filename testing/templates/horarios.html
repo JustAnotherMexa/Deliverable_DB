@@ -1,0 +1,129 @@
+{% extends basehtml %}
+
+{% block head %}
+    {% load static %}
+    <!-- Datepicker-->
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}"/>
+    <title>Clinica Dental || Horarios </title>
+{% endblock %}
+
+{% block title %}
+    <h3><i class="fa fa-user-times"></i> Horarios </h3>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <h1>Actualizar horarios de atención</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <form method="post">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <div class="col-sm-4">{{ form1.as_p }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <div class="col-sm-4">{{ form2.as_p }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <button class="btn btn-info" type="submit">Guardar</button>
+                        <a href='/home' class="btn btn-danger">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script>
+        exists = false;
+        $.ajax({  //Call ajax function sending the option loaded
+            url: "search_ajax/",  //This is the url of the ajax view where you make the search
+            type: 'POST',
+            dataType: "json",
+            data: {
+                usuario: {{ usuario }},
+                tag: "gethorario"
+            },
+            success: function (response) {
+                doc_horario = response[0];
+                if (doc_horario != null) {
+                    exists = true;
+
+                    $('#id_Lunes_Inicio').val(doc_horario[0].substr(0, doc_horario[0].indexOf('-')));
+                    $('#id_Lunes_Fin').val(doc_horario[0].substr(doc_horario[0].indexOf('-') + 1, doc_horario[0].length));
+                    $('#id_Martes_Inicio').val(doc_horario[1].substr(0, doc_horario[1].indexOf('-')));
+                    $('#id_Martes_Fin').val(doc_horario[1].substr(doc_horario[1].indexOf('-') + 1, doc_horario[1].length));
+                    $('#id_Miercoles_Inicio').val(doc_horario[2].substr(0, doc_horario[2].indexOf('-')));
+                    $('#id_Miercoles_Fin').val(doc_horario[2].substr(doc_horario[2].indexOf('-') + 1, doc_horario[2].length));
+                    $('#id_Jueves_Inicio').val(doc_horario[3].substr(0, doc_horario[3].indexOf('-')));
+                    $('#id_Jueves_Fin').val(doc_horario[3].substr(doc_horario[3].indexOf('-') + 1, doc_horario[3].length));
+                    $('#id_Viernes_Inicio').val(doc_horario[4].substr(0, doc_horario[4].indexOf('-')));
+                    $('#id_Viernes_Fin').val(doc_horario[4].substr(doc_horario[4].indexOf('-') + 1, doc_horario[4].length));
+                    $('#id_Sabado_Inicio').val(doc_horario[5].substr(0, doc_horario[5].indexOf('-')));
+                    $('#id_Sabado_Fin').val(doc_horario[5].substr(doc_horario[5].indexOf('-') + 1, doc_horario[5].length));
+                    $('#id_Domingo_Inicio').val(doc_horario[6].substr(0, doc_horario[6].indexOf('-')));
+                    $('#id_Domingo_Fin').val(doc_horario[6].substr(doc_horario[6].indexOf('-') + 1, doc_horario[6].length));
+
+                }
+                else {
+                    exists = false;
+                }
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.datepicker').datepicker();
+            $('.timepicker').timepicker({
+                timeFormat: 'h:mm p',
+                interval: 30,
+                minTime: '9',
+                maxTime: '18',
+                dropdown: true,
+                scrollbar: true,
+                dynamic: false
+            });
+        });
+    </script>
+{% endblock %}

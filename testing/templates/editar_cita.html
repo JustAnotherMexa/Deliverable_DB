@@ -1,0 +1,183 @@
+{% extends basehtml %}
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}" />
+    <title>Clinica Dental || Editar Cita</title>
+{% endblock %}
+
+{% block title %}
+    <h3><i class="fa fa-edit"></i> Editar Cita </h3>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        {% if messages %}
+                                <ul class="messages">
+                                    {% for message in messages %}
+                                        <li{% if message.tags %}
+                                            class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        <h1>Editar Cita</h1>
+                        <h3>Llenar todos los campos solicitados</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <form method="post">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div id="forma2">
+                        {{ form2.as_p }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <button class="btn btn-info" type="submit">Editar Cita</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script>
+        var cita =sessionStorage.getItem("sent");
+        $('#id_Cita_Id').val(cita);
+        $('#forma2').hide();
+        grupo = "{{ grupo }}";
+        $.ajax({  //Call ajax function sending the option loaded
+            url: "search_ajax/",  //This is the url of the ajax view where you make the search
+            type: 'POST',
+            dataType: "json",
+            data: {
+                cita: cita,
+                tag: "populatecita"
+            },
+            success: function (response) {
+                info_cita = response[0];
+                doctor = info_cita[0];
+                paciente = info_cita[1];
+                fecha = info_cita[2];
+                detalle = info_cita[3]
+                hora = fecha.substring(fecha.indexOf(" ")+1, fecha.length-3);
+                fecha = fecha.substring(0,fecha.indexOf(" "));
+                partesfecha = fecha.split('-');
+                if(grupo == "Pacientes" || grupo=="Administrador"){
+                    $('#id_Doctores').val(doctor);
+                }
+                else if(grupo == "Doctores" || grupo == "Administrador"){
+                    $('#id_Pacientes').val(paciente);
+                }
+                $('#id_Detalle').val(detalle);
+                $('#id_Fecha').val(partesfecha[1]+"/"+partesfecha[2]+"/"+partesfecha[0]);
+                $('#id_Fecha').trigger('change');
+                $('#id_Hora').val(hora);
+            }
+        });
+    </script>
+    <script>
+        horaminima = '';
+        horamaxima = '';
+        $(document).ready(function(){
+            $('.datepicker').datepicker({minDate: 0});
+            $('#id_Hora').timepicker({
+                timeFormat: 'H:mm',
+                interval:30,
+                minTime:'',
+                maxTime:'',
+                dropdown: true,
+                scrollbar: true,
+                dynamic: false
+            });
+        });
+    </script>
+    <script>
+        $('#id_Fecha').on('change',function() {
+            date = $(this).datepicker('getDate');
+            dayOfWeek = date.getUTCDay();
+            dia = "";
+            grupo = "{{ grupo }}";
+            if (grupo == "Doctores") {
+                doctor = "{{ usuario }}"
+            }
+            else {
+                doctor = $('#id_Doctores').val();
+            }
+            switch (dayOfWeek) {
+                case 1:
+                    dia = "Lunes";
+                    break;
+                case 2:
+                    dia = "Martes";
+                    break;
+                case 3:
+                    dia = "Miercoles";
+                    break;
+                case 4:
+                    dia = "Jueves";
+                    break;
+                case 5:
+                    dia = "Viernes";
+                    break;
+                case 6:
+                    dia = "Sabado";
+                    break;
+                case 0:
+                    dia = "Domingo";
+                    break;
+            }
+            $.ajax({  //Call ajax function sending the option loaded
+                url: "search_ajax/",  //This is the url of the ajax view where you make the search
+                type: 'POST',
+                dataType: "json",
+                data: {
+                    doctor: doctor,
+                    dia: dia,
+                    tag: "dynamichorarios"
+                },
+                success: function (response) {
+                    horadia = response;
+                    horaminima = horadia.substr(0, horadia.indexOf('-'));
+                    horamaxima = horadia.substr(horadia.indexOf('-') + 1, horadia.length);
+                }
+                });
+                setTimeout(function() {
+                    $('.timepicker').data('TimePicker').options.minTime = horaminima;
+                    $('.timepicker').data('TimePicker').options.maxTime = horamaxima;
+                    $('.timepicker').data('TimePicker').items = null;
+                    $('.timepicker').data('TimePicker').widget.instance = null;
+                }, 1500);
+            });
+    </script>
+{% endblock %}

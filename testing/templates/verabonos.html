@@ -1,0 +1,54 @@
+{% extends basehtml %}
+
+{% block head %}
+{% load static %}
+    <title>Clinica Dental || Abonos</title>
+{% endblock %}
+
+{% block title %}
+    <h3><i class="fa fa-money"></i> Abonos</h3>
+{% endblock %}
+
+{% load render_table from django_tables2 %}
+
+{% block body %}
+<div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <h1>Abonos</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        {% if tablaFinal == None %}
+        <h1>No hay Abonos Pagados</h1>
+    {% else %}
+        {% render_table tablaFinal  %}
+    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+        if("{{ grupo }}" != "Administrador") {
+            $('td:nth-child(2),th:nth-child(2)').hide();
+            $('td:nth-child(1),th:nth-child(1)').hide();
+        }
+    </script>
+{% endblock %}

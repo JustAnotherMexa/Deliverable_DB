@@ -1,0 +1,57 @@
+{% extends basehtml %}
+{% block head %}
+    <title>Clinica Dental || Materiales</title>
+{% endblock %}
+
+{% block title %}
+    <h3><i class="fa fa-cube"></i> Nuevo material </h3>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <h2>Materiales</h2>
+                        <h4>Crear nuevo material</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+ <form method="post">
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        {% csrf_token %}
+                        {% load l10n %}
+                        {{ form.as_p | unlocalize }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <button class="btn btn-info" type="submit">Agregar material</button>
+                        <a href="/register/home" class="btn btn-danger">Cancelar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+ </form>
+{% endblock %}

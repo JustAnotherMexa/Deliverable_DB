@@ -1,0 +1,38 @@
+{% extends 'bases/main-base.html' %}
+{% block mainhead %}
+    <title>Consultorio Dental || Bienvenido</title>
+{% endblock %}
+
+{% block mainbody %}
+    {% load static %}
+    <body background={% static 'img/doctor.jpg' %}>
+    <div id="container" class="cls-container">
+        <div class="lock-wrapper">
+            <div class="panel lock-box">
+                <div class="center"><img alt="" src={% static 'img/logo.png' %}/></div>
+                <div class="row">
+                    {% block body %}
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="registration"> ¿Aun no tienes una cuenta? <a href="/register"> <span class="text-primary"> Registrate </span>
+            </a></div>
+        </div>
+    </div>
+
+    <!-- END OF CONTAINER -->
+    <!--JAVASCRIPT-->
+    <!--=================================================-->
+    <!--jQuery [ REQUIRED ]-->
+    <script src={% static 'js/jquery-2.1.1.min.js' %}></script>
+    <!--BootstrapJS [ RECOMMENDED ]-->
+    <script src={% static 'js/bootstrap.min.js' %}></script>
+    <!--Fast Click [ OPTIONAL ]-->
+    <script src={% static 'plugins/fast-click/fastclick.min.js' %}></script>
+    <!--Switchery [ OPTIONAL ]-->
+    <script src={% static 'plugins/switchery/switchery.min.js' %}></script>
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src={% static 'plugins/bootstrap-select/bootstrap-select.min.js' %}></script>
+    </body>
+
+{% endblock %}

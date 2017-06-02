@@ -1,0 +1,96 @@
+{% extends basehtml %}
+{% block head %}
+    <title>Clinica Dental || Perfil</title>
+{% endblock %}
+
+{% block title %}
+    <h3><i class="fa fa-home"></i> Perfil </h3>
+{% endblock %}
+{% load static %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+            <div class="panel">
+                <div class="panel-body np">
+                    <img src=    {% if grupo == 'Pacientes' %}
+                        {% static 'img/paciente.jpg' %}
+                    {% elif grupo == 'Doctores' %}
+                        {% static 'img/dentist.jpg' %}
+                    {% elif grupo == 'Administrador' %}
+                        {% static 'img/admin.jpg' %}
+                    {% endif %}
+                                 alt="Cover"
+                         class="img-responsive">
+                    <div class="text-center">
+                        <!-- panel body -->
+                        <h4 class="text-lg text-overflow mar-top">{{ nombre }}</h4>
+                        <p class="text-sm">{{ grupo }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 col-md-9 col-sm-8 col-xs-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-user"> </i> Información de usuario</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td><i class="fa fa-envelope-o ph-5"></i></td>
+                            <td> Email</td>
+                            <td>{{ correo }}</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-phone ph-5"></i></td>
+                            <td> Telefono</td>
+                            <td> {{ celular }}</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-map-marker ph-5"></i></td>
+                            <td> Locación</td>
+                            <td> {{ ciudad }}, {{ entidad }}</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-home ph-5"></i></td>
+                            <td> Dirección</td>
+                            <td> {{ calle }}, {{ numero }}</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa {% if sexo == 'F' %}fa-female{% else %}fa-male{% endif %} ph-5"></i></td>
+                            <td> Sexo</td>
+                            <td> {{ sexo }}</td>
+                        </tr>
+                        {% if grupo == 'Pacientes' %}
+                            <tr>
+                                <td><i class="fa fa-heartbeat ph-5"></i></td>
+                                <td> Tipo de sangre</td>
+                                <td> {{ tipo_sangre }}</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <a href="/logout" class="btn btn-danger btn-lg">Log Out</a>
+                        <a href="/update_user_info" class="btn btn-warning btn-lg">Edit Info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+{% endblock %}
+
+</html>

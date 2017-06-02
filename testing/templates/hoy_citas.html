@@ -1,0 +1,61 @@
+{% extends basehtml %}
+{% load render_table from django_tables2 %}
+{% block head %}
+{% load static %}
+    <title>Clinica Dental || Citas de hoy</title>
+{% endblock %}
+
+{% block title %}
+    <h3><i class="fa fa-list"></i> Citas del día de hoy</h3>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <h1>Citas Agendadas</h1>
+                        <h4>Citas agendadas para el día de hoy </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        
+    {% if  citas != None %}
+        {% render_table citas %}
+    {% else %}
+        <h1>No hay citas agendadas</h1>
+    {% endif %}
+{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+{% block scripts %}
+    <script>
+        $('#tablamamalona tbody tr').each(function() {
+            var customerId = $(this).find(".ID_CITA").html();
+        $(this).append("<td class=\"Modificar btn-sm\"><button value=\"" + customerId + "\" onclick =\"ModificarCita(" + customerId + ")\" class=\"btn btn-info\"><a class=\"fa fa-edit\"></a></></td>");
+        $(this).append("<td class=\"ELIMINAR \"><button value=\"" + customerId + "\" onclick =\"RemoveCita(" + customerId + ")\" class=\"btn btn-sm btn-danger\"><i class=\"fa fa-remove\" style></i></></td>");
+        });
+    </script>
+    <script>
+        function ModificarCita(citaincoming){
+            sessionStorage.setItem("sent", citaincoming);
+            window.open('/editar_cita')
+        }
+    </script>
+{% endblock %}

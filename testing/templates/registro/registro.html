@@ -1,0 +1,34 @@
+{% extends 'bases/pages-register.html' %}
+
+{% block head %}
+    <title>Clinica Dental || Registro</title>
+{% endblock %}
+
+{% block body %}
+        {% load static %}
+    <body background={% static 'img/doctor.jpg' %}>
+    <h2>Formato de Registro</h2>
+    <h3>Favor de llenar toda la información solicitada</h3>
+    <br>
+<form method="post" class="form-inline">
+  {% csrf_token %}
+  {{ form.as_p }}
+    <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+    <a href='login' class="btn btn-block btn-danger">Cancelar</a>
+</form>
+
+    <!-- END OF CONTAINER -->
+    <!--JAVASCRIPT-->
+    <!--=================================================-->
+    <!--jQuery [ REQUIRED ]-->
+    <script src={% static 'js/jquery-2.1.1.min.js' %}></script>
+    <!--BootstrapJS [ RECOMMENDED ]-->
+    <script src={% static 'js/bootstrap.min.js' %}></script>
+    <!--Fast Click [ OPTIONAL ]-->
+    <script src={% static 'plugins/fast-click/fastclick.min.js' %}></script>
+    <!--Switchery [ OPTIONAL ]-->
+    <script src={% static 'plugins/switchery/switchery.min.js' %}></script>
+    <!--Bootstrap Select [ OPTIONAL ]-->
+    <script src={% static 'plugins/bootstrap-select/bootstrap-select.min.js' %}></script>
+    </body>
+{% endblock %}

@@ -1,0 +1,217 @@
+{% extends basehtml %}
+{% block head %}
+    <title>Clinica Dental || Perfil Paciente</title>
+{% endblock %}
+
+{% block title %}
+    <h3><i class="fa fa-home"></i> Perfil Paciente</h3>
+{% endblock %}
+{% load static %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
+            <div class="panel">
+                <div class="panel-body np">
+                    <img src=
+                                 {% static 'img/paciente.jpg' %}
+                                 alt="Cover"
+                         class="img-responsive">
+                    <div class="text-center">
+                        <!-- panel body -->
+                        <h4 class="text-lg text-overflow mar-top" id="id_nombre"></h4>
+                        <p class="text-sm">Paciente</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7 col-md-9 col-sm-8 col-xs-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-user"> </i> Información de usuario</h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td><i class="fa fa-envelope-o ph-5"></i></td>
+                            <td> Email</td>
+                            <td id="id_correo"></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-phone ph-5"></i></td>
+                            <td> Telefono</td>
+                            <td id="id_telefono"></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-map-marker ph-5"></i></td>
+                            <td> Ubicación</td>
+                            <td id="id_ubicacion"></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-home ph-5"></i></td>
+                            <td> Dirección</td>
+                            <td id="id_direccion"></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa {% if sexo == 'F' %}fa-female{% else %}fa-male{% endif %} ph-5"></i></td>
+                            <td> Sexo</td>
+                            <td id="id_sexo"></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fa-heartbeat ph-5"></i></td>
+                            <td> Tipo de sangre</td>
+                            <td id="id_blood"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-3">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <h3><a class="fa fa-heartbeat"></a> Alergias de paciente</h3>
+                        <div class="table-container">
+                            <table class="table table-hover table-vcenter" id="tablaalergias">
+                                <thead>
+                                <tr>
+                                    <th class="NOMBRE"><a href="?sort=ID_CITA">NOMBRE</a></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <h3><a class="fa fa-list-alt"></a> Tratamientos de paciente</h3>
+                        <table class="table table-hover table-vcenter" id="tablatratamientos">
+                            <thead>
+                            <tr>
+                                <th class="NOMBRE"><a href="?sort=ID_CITA">NOMBRE</a></th>
+                                <th>ELIMINAR</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                        <h3><a class="fa fa-plus"></a> Enfermedades de paciente</h3>
+                        <table class="table table-hover table-vcenter" id="tablaenfermedades">
+                            <thead>
+                            <tr>
+                                <th class="NOMBRE"><a href="?sort=ID_CITA">NOMBRE</a></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-body text-center">
+                    <div class="row">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        var paciente = sessionStorage.getItem("paciente");
+        $.ajax({  //Call ajax function sending the option loaded
+            url: "search_ajax/",  //This is the url of the ajax view where you make the search
+            type: 'POST',
+            dataType: "json",
+            data: {paciente: paciente, tag: "populateperfil"},
+            success: function (response) {
+                patient_info = response;
+                $('#id_nombre').html(patient_info[3]);
+                $('#id_sexo').html(patient_info[11]);
+                $('#id_correo').html(patient_info[4]);
+                $('#id_telefono').html(patient_info[10]);
+                $('#id_blood').html(patient_info[12]);
+                $('#id_ubicacion').html(patient_info[7] + ", " + patient_info[8] + ", " + patient_info[9]);
+                $('#id_direccion').html(patient_info[5] + ", " + patient_info[6]);
+            }
+        });
+        $.ajax({  //Call ajax function sending the option loaded
+            url: "search_ajax/",  //This is the url of the ajax view where you make the search
+            type: 'POST',
+            dataType: "json",
+            data: {paciente: paciente, tag: "tablaalergia"},
+            success: function (response) {
+                patient_allergies = response;
+                for(i=0;i<patient_allergies.length;++i) {
+                    $('#tablaalergias > tbody:last-child').append($('<tr>').text(patient_allergies[i]));
+                }
+            }
+        });
+        $.ajax({  //Call ajax function sending the option loaded
+            url: "search_ajax/",  //This is the url of the ajax view where you make the search
+            type: 'POST',
+            dataType: "json",
+            data: {paciente: paciente, tag: "tablatratamientos"},
+            success: function (response) {
+                patient_treat = response;
+                for(i=0;i<patient_treat.length;++i) {
+                    current = patient_treat[i];
+                    $('#tablatratamientos > tbody:last-child').append($('<tr>').append($('<td>').text(current[1])).append($('<td>').append($("<class=\"ELIMINAR \"><button value=\"" + current[0] + "\" onclick =\"RemoveTreat(" + current[0] + ")\" class=\"btn btn-sm btn-danger\"><i class=\"fa fa-remove\" style></i></>"))));
+                }
+            }
+        });
+                $.ajax({  //Call ajax function sending the option loaded
+            url: "search_ajax/",  //This is the url of the ajax view where you make the search
+            type: 'POST',
+            dataType: "json",
+            data: {paciente: paciente, tag: "tablaenfermedades"},
+            success: function (response) {
+                patient_disease = response;
+                for(i=0;i<patient_disease.length;++i) {
+                    $('#tablaenfermedades > tbody:last-child').append($('<tr>').text(patient_disease[i]));
+                }
+            }
+        });
+    </script>
+    <script>
+        function RemoveTreat(idtreat){
+            $.ajax({  //Call ajax function sending the option loaded
+            url: "search_ajax/",  //This is the url of the ajax view where you make the search
+            type: 'POST',
+            dataType: "json",
+            data: {idtreat: idtreat, tag: "deletetreat"},
+            success: function (response) {
+                alert('Tratamiento Eliminado')
+            }
+        });
+    }
+    </script>
+{% endblock %}
